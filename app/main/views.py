@@ -11,7 +11,7 @@ def index():
     """View root page function that returns index page and the various news sources"""
 
     title = 'Welcome to the Pitching site'
-    categories = PitchListing.get_listing()
+    listing = PitchListing.get_listing()
 
     return render_template('index.html', title=title, listing=listing)
 
@@ -144,7 +144,7 @@ def new_comment(id):
         new_comment = Comments(comment_id=comment_id,
                                user_id=current_user.id, pitches_id=pitches.id)
         new_comment.save_comment()
-        return redirect(url_for('.category', id=pitches.category_id))
+        return redirect(url_for('.listing', id=pitches.listing_id))
 
     return render_template('comment.html', comment_form=form)
 
