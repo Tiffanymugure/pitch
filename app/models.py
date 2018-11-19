@@ -41,7 +41,7 @@ class User(UserMixin, db.Model):
 
 class PitchListing(db.Model):
     '''
-    Listing class define category per pitch
+    Listing class define listing per pitch
     '''
     __tablename__ = 'pitch_listing'
     id = db.Column(db.Integer, primary_key=True)
@@ -67,7 +67,7 @@ class PitchListing(db.Model):
 class Pitches(db.Model):
 
     """
-    Class that holds instances of all the pitches in the different categories
+    Class that holds instances of all the pitches in the different listing
     """
     all_pitches = []
 
@@ -77,7 +77,7 @@ class Pitches(db.Model):
     actual_pitch = db.Column(db.String)
     date_posted = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    category_id = db.Column(db.Integer, db.ForeignKey("pitch_categories.id"))
+    category_id = db.Column(db.Integer, db.ForeignKey("pitch_listing.id"))
     comment = db.relationship("Comments", backref="pitches", lazy="dynamic")
 
     def save_pitch(self):
@@ -89,20 +89,20 @@ class Pitches(db.Model):
 
     @classmethod
     def clear_pitches(cls):
-        """Function which clears all the pitches in a particular category"""
+        """Function which clears all the pitches in a particular listing"""
         Pitches.all_pitches.clear()
 
     # display pitches
     @classmethod
     def get_pitches(cls, id):
         """Function which gets a particular pitch when requested by date posted"""
-        pitches = Pitches.query.order_by(Pitches.date_posted.desc()).filter_by(category_id=id).all()
+        pitches = Pitches.query.order_by(Pitches.date_posted.desc()).filter_by(listing_id=id).all()
         return pitches
 
 
 class Comments(db.Model):
     '''
-    Comment class that creates instances of Comments class that will be attached to a particular pi
+    Comment class that creates instances of Comments class that will be attached to a particular pitch
     '''
     __tablename__ = 'comment'
 
