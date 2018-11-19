@@ -1,0 +1,12 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% block styles%}
+    {{ super() }}
+    {% endblock %}
+{% block content %}
+<div class="w3-sidebar w3-light-green w3-bar-block" id="sidebar">
+  <p class="well">Select a listing Below</p>
+    {{ macro.displayListingList(listing) }}
+</div>
+
+{% endblock %}
