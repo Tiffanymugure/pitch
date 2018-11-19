@@ -5,4 +5,4 @@ instance/config.py
 .vscode/
 .idea
 virtual
-.start.sh/
+start.sh
