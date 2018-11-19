@@ -3,6 +3,8 @@ from flask_script import Manager, Server
 from flask_migrate import Migrate, MigrateCommand
 from app.models import User, Comments, PitchListing, Pitches
 
+app = create_app('test')
+
 # Creating app instance
 app = create_app('production')
 
