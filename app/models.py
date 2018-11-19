@@ -91,7 +91,7 @@ class Pitches(db.Model):
     def clear_pitches(cls):
         """Function which clears all the pitches in a particular listing"""
         Pitches.all_pitches.clear()
-
+ 
     # display pitches
     @classmethod
     def get_pitches(cls, id):
