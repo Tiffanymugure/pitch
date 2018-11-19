@@ -17,11 +17,16 @@ The overriding design goal for The pitcherapp is to place people in the context 
 Python uses a number of open source projects to work properly:
 
 .HTML
+
 .CSS
+
 .Python
+
 .Bootstrap
+
 .flask
-Installation
+
+## Installation
 To start application we first
 
 $ git clone https://github.com/Tiffanymugure/pitch
