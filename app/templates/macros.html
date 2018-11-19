@@ -1,0 +1,8 @@
+{% macro displayCategoryList(category_list) %}
+  {% for category in category_list%}
+        <div>
+          <a href="{{url_for('.category',id=category.id)}}"><p>{{category.name|upper}}</p></a>
+        </div>
+
+    {% endfor %}
+{% endmacro %}
