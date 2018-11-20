@@ -9,11 +9,15 @@
         </button>
        <a class="navbar-brand" href="/listing/pitch/new/{{current_user.id}}"style="color:rgb(66, 248, 11); font-weight:bolder;">Pitch</a></li>
        <a class="navbar-brand" href="/listing/new" style="color:rgb(66, 248, 11); font-weight:bolder;">Add Listing</a></li>
+       <a class="navbar-brand" href="/politics" style="color:rgb(66, 248, 11); font-weight:bolder;">Politics</a></li>
+       <a class="navbar-brand" href="/comedy" style="color:rgb(66, 248, 11); font-weight:bolder;">Comedy</a></li>
+       <a class="navbar-brand" href="/business" style="color:rgb(66, 248, 11); font-weight:bolder;">Business</a></li>
+       <a class="navbar-brand" href="/entertainment" style="color:rgb(66, 248, 11); font-weight:bolder;">Entertainment</a></li>
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           {% if current_user.is_authenticated %}
-        <li  id="home"><a href="/" style="color:rgb(66, 248, 11); font-weight:bolder;"<span class="glyphicon glyphicon-home"></span>&nbsp;</a>>Home</a></li>
+        <li  id="home"><a href="/" style="color:rgb(66, 248, 11); font-weight:bolder;"<span class="glyphicon glyphicon-home"></span>&nbsp;
           <li><a href="{{url_for('main.profile',uname=current_user.username)}}" class="profile" style="color:rgb(66, 248, 11); font-weight:bolder;">Profile</a></li>
           <li><a href="{{url_for('main.profile',uname=current_user.username)}}" class="user"style="color:rgb(66, 248, 11); font-weight:bolder;"><span class="glyphicon glyphicon-user"></span> &nbsp;{{current_user.username}}</a></li>
           <li><a href="{{url_for('auth.logout')}}" class="logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log out</a></li>
