@@ -10,19 +10,27 @@
 </div>
 
 <div class="container-fluid">
-        <div class="jumbotron">
-          <h1 id="title">PITCH </h1>
+        <div class="jumbotron" style= "background: linear-gradient(to bottom, #00ff00 0%, #66ffff 100%);">
+       <img src="{{url_for('static',filename='photos/welcome_1.jpeg')}}" height='200px' width='200px' alt="">
+          
+          <!-- <h1 id="title">PITCH </h1> -->
+          <h1 style="font-weight: bold; text-align: center; box-shadow: chartreuse;">PITCH</h1>
           <div id="f1_container">
           <div id="f1_card" class="shadow">
-            <div class="front face">
-              <p>Welcome to Pitch &#x263A;</p>
+            <div class="front face">color:rgb(66, 248, 11);
+              <!-- <p>Welcome to Pitch &#x263A;</p> -->
+          <p style="font-weight: bold; text-align: center;">Welcome to pitch&#x263A;</p>
             </div>
             <div class="back face center">
-              <p>SHARE YOUR DIFFERENT PITCHES!</p>
+          <p style="font-weight: bold; text-align: right; font-style: italic;">&#x263A;Share your different pitches&#x263A;</p>
+          <!-- <p>SHARE YOUR DIFFERENT PITCHES!</p> -->
             </div>
           </div>
           </div>
         </div>
+        {% for pitches in pitch %}
+            {{pitches.actual_pitch}}
+            {% endfor %}
 {% endblock %}
 
         

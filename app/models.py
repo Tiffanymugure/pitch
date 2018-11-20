@@ -77,7 +77,7 @@ class Pitches(db.Model):
     actual_pitch = db.Column(db.String)
     date_posted = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    category_id = db.Column(db.Integer, db.ForeignKey("pitch_listing.id"))
+    listing = db.Column(db.String(200))
     comment = db.relationship("Comments", backref="pitches", lazy="dynamic")
 
     def save_pitch(self):

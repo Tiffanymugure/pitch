@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, abort
 from . import main
 from flask_login import login_required, current_user
-from ..models import User, PitchListing, Pitches, Comments
+from ..models import User, Pitches, Comments, PitchListing
 from .forms import UpdateProfile, PitchForm, CommentForm, ListingForm
 from .. import db, photos
 
@@ -11,9 +11,9 @@ def index():
     """View root page function that returns index page and the various news sources"""
 
     title = 'Welcome to the Pitching site'
-    listing = PitchListing.get_listing()
+    pitch = Pitches.query.all()
 
-    return render_template('index.html', title=title, listing=listing)
+    return render_template('index.html', title=title, pitch=pitch)
 
 
 # Route for adding a new pitch
@@ -25,18 +25,17 @@ def new_pitch(id):
     Function to check Pitches form
     '''
     form = PitchForm()
-    # listing = Pitchlisting.query.filter_by(id=id).first()
+    listing = PitchListing.query.filter_by(id=id)
 
     if listing is None:
         abort(404)
 
     if form.validate_on_submit():
-        actual_pitch = form.content.data
-        # new_pitch = Pitches(actual_pitch=actual_pitch, user_id=current_user.id, listing_id=listing.id)
-        # new_pitch.save_pitch()
-        # return redirect(url_for('.listing', id=listing.id))
+        pitchess = Pitches(actual_pitch=form.content.data, listing=form.category.data)
+        pitchess.save_pitch()
+    
         return redirect (url_for('main.index'))
-    return render_template('new_pitch.html', pitch_form=form, listing=listing)
+    return render_template('new_pitch.html', pitch_form=form)
 
 # Routes for displaying the different pitches
 @main.route('/listing/new',methods=['GET','POST'])
@@ -49,7 +48,8 @@ def new_listing():
 		new_listing.save_listing()
 		return redirect(url_for('main.index'))
 	title = 'New Pitch Listing'
-	return render_template('new_listing.html',listing_form=form)	
+	return render_template('new_listing.html',listing_form=form)
+
 @main.route('/listing/<int:id>')
 def listing(id):
     '''
@@ -74,7 +74,7 @@ def single_pitch(id):
 
     if pitches.validate_on_submit():
 
-        pitchess = Pitches(pitch=pitches.pitch.data, category=pitch.PitchListing.data)
+        pitchess = Pitches(pitch=pitches.pitch.data, listing=pitches.listing.data)
         pitchess.save_pitch()
         return redirect(url_for('listing'))
 
@@ -151,6 +151,49 @@ def new_comment(id):
         return redirect(url_for('.listing', id=pitches.listing_id))
 
     return render_template('comment.html', comment_form=form)
+
+
+
+# Pitch Listing
+@main.route('/Business', methods = ['GET', 'POST'])
+def business():
+    """
+    displaying business pitches
+    """
+    business=Pitches.query.filter_by(listing="Business").all()
+
+    return render_template('buinsess.html', pitches =business)
+
+
+@main.route('/Politics', methods = ['GET', 'POST'])
+def politics():
+    """
+    show politics pitches
+    """
+    politics = Pitches.query.filter_by(listing="Politics").all()
+
+    return render_template('Political.html', pitches=politics)
+
+
+@main.route('/Entertainment', methods = ['GET', 'POST'])
+def entertainment():
+    """
+     show entertainment pitches
+    """
+    entertainment = Pitches.query.filter_by(listing="Entertainment").all()
+
+    return render_template('Entertainment.html', pitches=entertainment)
+
+
+@main.route('/comedy', methods = ['GET', 'POST'])
+def comedy():
+    """
+    show comedy pitches
+    """
+    comedy = Pitches.query.filter_by(listing='comedy').all()
+
+    return render_template('comedy.html', pitches=comedy)
+
 
 # @main.route('/like/<id>')
 # @login_required
