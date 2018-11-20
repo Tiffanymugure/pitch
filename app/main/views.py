@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, abort
 from . import main
 from flask_login import login_required, current_user
 from ..models import User, PitchListing, Pitches, Comments
-from .forms import UpdateProfile, PitchForm, CommentForm
+from .forms import UpdateProfile, PitchForm, CommentForm, ListingForm
 from .. import db, photos
 
 
@@ -25,18 +25,17 @@ def new_pitch(id):
     Function to check Pitches form
     '''
     form = PitchForm()
-    listing = Pitchlisting.query.filter_by(id=id).first()
+    # listing = Pitchlisting.query.filter_by(id=id).first()
 
     if listing is None:
         abort(404)
 
     if form.validate_on_submit():
         actual_pitch = form.content.data
-        new_pitch = Pitches(actual_pitch=actual_pitch,
-                            user_id=current_user.id, listing_id=listing.id)
-        new_pitch.save_pitch()
-        return redirect(url_for('.listing', id=listing.id))
-
+        # new_pitch = Pitches(actual_pitch=actual_pitch, user_id=current_user.id, listing_id=listing.id)
+        # new_pitch.save_pitch()
+        # return redirect(url_for('.listing', id=listing.id))
+        return redirect (url_for('main.index'))
     return render_template('new_pitch.html', pitch_form=form, listing=listing)
 
 # Routes for displaying the different pitches
@@ -45,10 +44,10 @@ def new_pitch(id):
 def new_listing():
 	form = ListingForm()
 	if form.validate_on_submit():
-		name = form.name.data
+		name = form.add.data
 		new_listing = PitchListing(name=name)
 		new_listing.save_listing()
-		return redirect(url_for('.new_listing'))
+		return redirect(url_for('main.index'))
 	title = 'New Pitch Listing'
 	return render_template('new_listing.html',listing_form=form)	
 @main.route('/listing/<int:id>')
@@ -61,8 +60,8 @@ def listing(id):
     if listing is None:
         abort(404)
 
-    pitches = Pitches.get_pitches(id)
-    return render_template('listing.html', listing=listing, pitches=pitches)
+    # pitches = Pitches.get_pitches(id)
+    return render_template('listing.html', listing=listing, )
 
 
 @main.route('/pitch/<int:id>', methods=['GET', 'POST'])
@@ -71,14 +70,19 @@ def single_pitch(id):
     '''
     Function the returns a single pitch for comment to be added
     '''
+    pitches = PitchForm()
 
-    pitches = Pitches.query.get(id)
+    if pitches.validate_on_submit():
 
-    if pitches is None:
-        abort(404)
+        pitchess = Pitches(pitch=pitches.pitch.data, category=pitch.PitchListing.data)
+        pitchess.save_pitch()
+        return redirect(url_for('listing'))
+
+    # if pitches is None:
+    #     abort(404)
 
     comment = Comments.get_comments(id)
-    return render_template('pitch.html', pitches=pitches, comment=comment)
+    return render_template('pitch.html', pitch=pitches, comment=comment)
 
 
 # Routes for user authentication
