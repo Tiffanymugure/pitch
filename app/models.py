@@ -108,6 +108,7 @@ class Comments(db.Model):
 
     # add columns
     id = db.Column(db. Integer, primary_key=True)
+    actual_comment = db.Column(db.String)
     comment_id = db.Column(db.String(255))
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))

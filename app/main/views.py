@@ -61,7 +61,25 @@ def listing(id):
         abort(404)
 
     # pitches = Pitches.get_pitches(id)
+    return redirect (url_for('main.index'))
     return render_template('listing.html', listing=listing, )
+
+
+@main.route('/comment',methods = ['GET','POST'])
+def comment():
+    '''
+    comment route function returns a list of  in the listing chosen
+    '''
+    form = CommentForm()
+    comments = Comments.query.all()
+    if comment is None:
+        abort(404)
+    if form.validate_on_submit():
+        description = form.description.data
+        new_comment = Comments(actual_comment = description)
+        db.session.add(new_comment)
+        db.session.commit()
+    return render_template('comment.html', comments=comments , form = form)
 
 
 @main.route('/pitch/<int:id>', methods=['GET', 'POST'])
@@ -82,6 +100,7 @@ def single_pitch(id):
     #     abort(404)
 
     comment = Comments.get_comments(id)
+    return redirect (url_for('main.index'))
     return render_template('pitch.html', pitch=pitches, comment=comment)
 
 
@@ -139,43 +158,32 @@ def new_comment(id):
     '''
     form = CommentForm()
     pitches = Pitches.query.filter_by(id=id).first()
+    print(pitches.listing)
 
     if pitches is None:
         abort(404)
 
     if form.validate_on_submit():
-        comment_id = form.comment_id.data
-        new_comment = Comments(comment_id=comment_id,
-                               user_id=current_user.id, pitches_id=pitches.id)
+        comment = form.description.data
+        new_comment = Comments(user_id=current_user.id, comment_id=comment, pitches_id=pitches.id)
         new_comment.save_comment()
-        return redirect(url_for('.listing', id=pitches.listing_id))
+        return redirect(url_for('main.listing', id=pitches.id))
 
     return render_template('comment.html', comment_form=form)
 
 
 
 # Pitch Listing
-@main.route('/Business', methods = ['GET', 'POST'])
+@main.route('/business', methods = ['GET', 'POST'])
 def business():
     """
     displaying business pitches
     """
     business=Pitches.query.filter_by(listing="Business").all()
-
+    return redirect (url_for('main.index',))
     return render_template('buinsess.html', pitches =business)
 
-
-@main.route('/Politics', methods = ['GET', 'POST'])
-def politics():
-    """
-    show politics pitches
-    """
-    politics = Pitches.query.filter_by(listing="Politics").all()
-
-    return render_template('Political.html', pitches=politics)
-
-
-@main.route('/Entertainment', methods = ['GET', 'POST'])
+@main.route('/entertainment', methods = ['GET', 'POST'])
 def entertainment():
     """
      show entertainment pitches

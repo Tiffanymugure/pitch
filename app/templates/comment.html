@@ -6,5 +6,8 @@
 {% block content %}
 <div class="container">
   {{wtf.quick_form(form)}}
+  {% for comment in comments%}
+    <p>{{comment.actual_comment}}</p>
+  {% endfor %}
 </div>
 {% endblock %}

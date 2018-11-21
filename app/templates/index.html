@@ -14,7 +14,7 @@
        <img src="{{url_for('static',filename='photos/welcome_1.jpeg')}}" height='200px' width='200px' alt="">
           
           <!-- <h1 id="title">PITCH </h1> -->
-          <h1 style="font-weight: bold; text-align: center; box-shadow: chartreuse;">PITCH</h1>
+          <h1 style="font-weight: bold; text-align: center; box-shadow: chartreuse; font-size:80px; ">PITCH</h1>
           <div id="f1_container">
           <div id="f1_card" class="shadow">
             <div class="front face">
@@ -28,11 +28,55 @@
           </div>
           </div>
         </div>
-        {% for pitches in pitch %}
-            {{pitches.actual_pitch}}
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <!-- <p>&#x263A;</p> -->
+            </div>
+            <div class="flip-card-back" style= "background: linear-gradient(to bottom, #00ff00 0%, #66ffff 100%);">
+              <h1 style="font-weight:bold; text-align:center;">Politics</h1> 
+              <p style="font-style: italic; font-weight: bold;  text-align:center;" >Most bad government comes from too much government</p> 
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+                <!-- <p>&#x263A;</p> -->
+              </div>
+              <div class="flip-card-back" style= "background: linear-gradient(to bottom, #00ff00 0%, #66ffff 100%);">
+                <h1 style="font-weight:bold; text-align:center;">Comedy</h1> 
+                <p style="font-style: italic; font-weight: bold; text-align: center; " >A day without laughter is a day wasted</p> 
+              </div>
+            </div>
+          </div>
+          <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <!-- <p>&#x263A;</p> -->
+                </div>
+                <div class="flip-card-back" style= "background: linear-gradient(to bottom, #00ff00 0%, #66ffff 100%);">
+                  <h1 style="font-weight:bold; text-align:center;">Business</h1> 
+                  <p style="font-style: italic; font-weight: bold; text-align:center;" >The best business quality is quality not quantity</p> 
+                </div>
+              </div>
+            </div>
+            {% for pitches in pitch %}
+              <div class="flip-card">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <!-- <p>&#x263A;</p> -->
+                    </div>
+                    <div class="flip-card-back" style= "background: linear-gradient(to bottom, #00ff00 0%, #66ffff 100%);">
+                      <h1 style="font-weight:bold; text-align:center;">{{pitches.listing}}</h1> 
+            <p style="font-style: italic; font-weight: bold; text-align:center;" >
+                {{pitches.actual_pitch}}
+                      </p> 
+                    </div>
+                  </div>
+                </div>
             {% endfor %}
 {% endblock %}
-
         
 <!-- {% if pitches %}
 
